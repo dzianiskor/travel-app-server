@@ -13,10 +13,11 @@ app.use('/api/countries', require('./routes/countries'))
 app.use('/api/db', require('./routes/db'))
 
 const PORT = process.env.PORT || config.get('port') || 5000
+const mongoUri = process.env.MONGO || config.get('dataBaseUri')
 
 const start = async () => {
     try {
-        await mongoose.connect(config.get('dataBaseUri'), {
+        await mongoose.connect(mongoUri, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
