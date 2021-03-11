@@ -1,39 +1,12 @@
 const {Router} = require('express')
 const router = Router()
 const Country = require('../models/Country')
+const config = require('config')
+const DEFAULT_LANG = process.env.DEFAULT_LANG || config.get('defaultLang') || 'ru'
 
-router.post('/getCountry', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const {id, lang} = req.body;
-        const country = await Country.findById(id)
-            .populate('name', `${lang} -_id`)
-            .populate('description', `${lang} -_id`)
-            .populate('capital', `${lang} -_id`)
-            .populate({
-                path: 'galleries',
-                select: '-_id',
-                populate: [
-                    {
-                        path: 'name',
-                        select: `${lang} -_id`
-                    },
-                    {
-                        path: 'description',
-                        select: `${lang} -_id`
-                    }
-                ]
-            })
-            .lean()
-
-        res.json(normalizeCountry(country, lang))
-    } catch (e) {
-        res.status(500).json({message: e.message})
-    }
-})
-
-router.post('/getCountries', async (req, res) => {
-    try {
-        const {lang} = req.body;
+        const lang = req.query.lang || DEFAULT_LANG
         const countries = await Country.find({})
             .populate('name', `${lang} -_id`)
             .populate('description', `${lang} -_id`)
@@ -55,6 +28,36 @@ router.post('/getCountries', async (req, res) => {
             .lean()
 
         res.json(countries.map(country => normalizeCountry(country, lang)))
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+})
+
+router.get('/:id', async (req, res) => {
+    try {
+        const {id} = req.params;
+        const lang = req.query.lang || DEFAULT_LANG
+        const country = await Country.findById(id)
+            .populate('name', `${lang} -_id`)
+            .populate('description', `${lang} -_id`)
+            .populate('capital', `${lang} -_id`)
+            .populate({
+                path: 'galleries',
+                select: '-_id',
+                populate: [
+                    {
+                        path: 'name',
+                        select: `${lang} -_id`
+                    },
+                    {
+                        path: 'description',
+                        select: `${lang} -_id`
+                    }
+                ]
+            })
+            .lean()
+
+        res.json(normalizeCountry(country, lang))
     } catch (e) {
         res.status(500).json({message: e.message})
     }
