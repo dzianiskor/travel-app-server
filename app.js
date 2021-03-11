@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/api/countries', require('./routes/countries'))
 app.use('/api/db', require('./routes/db'))
+app.use('/api/auth', require('./routes/auth'))
 
 const PORT = process.env.PORT || config.get('port') || 5000
 const mongoUri = process.env.MONGO || config.get('dataBaseUri')

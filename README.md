@@ -7,7 +7,12 @@
     * Need params: lang = ru || en || gr and id from DB
     * Return one country in the current language
 * GET: https://dzianiskor-travel-app-server.herokuapp.com/api/countries/getAllDataCountries
-  * Return all data in all languages  
+  * Return all data in all languages
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/auth/register
+  * А new user is created in the database
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/auth/login
+  * Authorizes the user. Returns jwt-token and user id.
+
 ## Run project locally
 1. git clone
 2. npm install

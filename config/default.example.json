@@ -1,5 +1,6 @@
 {
   "port": 5000,
   "dataBaseUri": "mongodb+srv://",
-  "defaultLang": "ru"
+  "defaultLang": "ru",
+  "jwtSecret": "travel app forever"
 }
