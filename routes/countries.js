@@ -33,6 +33,32 @@ router.get('/', async (req, res) => {
     }
 })
 
+router.get('/getAllDataCountries', async (req, res) => {
+    try {
+        const country = await Country.find({})
+            .populate('name', `-_id`)
+            .populate('description', `-_id`)
+            .populate('capital', `-_id`)
+            .populate({
+                path: 'galleries',
+                select: '-_id',
+                populate: [
+                    {
+                        path: 'name',
+                        select: `-_id`
+                    },
+                    {
+                        path: 'description',
+                        select: `-_id`
+                    }
+                ]
+            })
+        res.json(country)
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+})
+
 router.get('/:id', async (req, res) => {
     try {
         const {id} = req.params;
@@ -58,32 +84,6 @@ router.get('/:id', async (req, res) => {
             .lean()
 
         res.json(normalizeCountry(country, lang))
-    } catch (e) {
-        res.status(500).json({message: e.message})
-    }
-})
-
-router.get('/getAllDataCountries', async (req, res) => {
-    try {
-        const country = await Country.find({})
-            .populate('name', `-_id`)
-            .populate('description', `-_id`)
-            .populate('capital', `-_id`)
-            .populate({
-                path: 'galleries',
-                select: '-_id',
-                populate: [
-                    {
-                        path: 'name',
-                        select: `-_id`
-                    },
-                    {
-                        path: 'description',
-                        select: `-_id`
-                    }
-                ]
-            })
-        res.json(country)
     } catch (e) {
         res.status(500).json({message: e.message})
     }
