@@ -14,6 +14,7 @@
   * Authorizes the user. Returns jwt-token and user id.
 * POST: https://dzianiskor-travel-app-server.herokuapp.com/api/uploads/avatar
   * Need send file: image/png || image/jpg || image/jpeg
+  * Need send jwtToken: `headers: {'Authorization': Bearer {token}}`  
   * Upload avatar image. Return link to this image.
 
 ## Run project locally

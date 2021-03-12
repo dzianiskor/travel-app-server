@@ -64,9 +64,10 @@ router.post('/login',
                 return res.status(400).json({message: 'Wrong password please try again'})
             }
 
-            const token = jwt.sign({userId: user.id}, jwtSecret, {expiresIn: '1d'})
+            const tokenExpiresIn = '1d'
+            const token = jwt.sign({userId: user.id}, jwtSecret, {expiresIn: tokenExpiresIn})
 
-            return res.json({token, userId: user.id})
+            return res.json({token, userId: user.id, tokenExpiresIn, avatar: user.avatar})
         } catch (e) {
             res.status(500).json({message: e.message})
         }

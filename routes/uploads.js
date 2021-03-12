@@ -2,6 +2,9 @@ const {Router} = require('express')
 const router = Router()
 const multer = require('multer')
 const fs = require("fs")
+const User = require('../models/User')
+
+const auth = require('../middleware/auth.middleware')
 
 const storage = multer.diskStorage({
     destination: (req, file, callBack) => {
@@ -24,12 +27,15 @@ const fileFilter = (req, file, cb) => {
 }
 let upload = multer({storage, fileFilter})
 
-router.post('/avatar', upload.single('file'), (req, res, next) => {
+router.post('/avatar', auth, upload.single('file'), async (req, res, next) => {
     const file = req.file
     let avatarPath = req.protocol + '://' + req.headers.host + '/' + file.filename
     if (!file) {
         return res.status(400).json({message: 'No File'})
     }
+    const user = await User.findById(req.user.userId)
+    user.avatar = avatarPath
+    await user.save()
 
     return res.send(avatarPath);
 })
