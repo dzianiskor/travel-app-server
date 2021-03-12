@@ -26,7 +26,7 @@ let upload = multer({storage, fileFilter})
 
 router.post('/avatar', upload.single('file'), (req, res, next) => {
     const file = req.file
-    let avatarPath = req.headers.host + '/' + file.filename
+    let avatarPath = req.protocol + '://' + req.headers.host + '/' + file.filename
     if (!file) {
         return res.status(400).json({message: 'No File'})
     }
