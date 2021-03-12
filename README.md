@@ -8,10 +8,13 @@
     * Return one country in the current language
 * GET: https://dzianiskor-travel-app-server.herokuapp.com/api/countries/getAllDataCountries
   * Return all data in all languages
-* POST: https://dzianiskor-travel-app-server.herokuapp.com/auth/register
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/api/auth/register
   * А new user is created in the database
-* POST: https://dzianiskor-travel-app-server.herokuapp.com/auth/login
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/api/auth/login
   * Authorizes the user. Returns jwt-token and user id.
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/api/uploads/avatar
+  * Need send file: image/png || image/jpg || image/jpeg
+  * Upload avatar image. Return link to this image.
 
 ## Run project locally
 1. git clone
