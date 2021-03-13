@@ -8,6 +8,7 @@ router.get('/', async (req, res) => {
     try {
         const lang = req.query.lang || DEFAULT_LANG
         const countries = await Country.find({})
+            .select('-galleries')
             .populate('name', `${lang} -_id`)
             .populate('description', `${lang} -_id`)
             .populate('capital', `${lang} -_id`)
@@ -88,11 +89,11 @@ function normalizeCountry(country, lang) {
         name: country.name[lang],
         capital: country.capital[lang],
         description: country.description[lang],
-        galleries: country.galleries.map(gallery => ({
+        galleries: (country.galleries) ? country.galleries.map(gallery => ({
             ...gallery,
             name: gallery.name[lang],
             description: gallery.description[lang]
-        }))
+        })) : ''
     }
 }
 
