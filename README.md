@@ -16,6 +16,10 @@
   * Need send file: image/png || image/jpg || image/jpeg
   * Need send jwtToken: `headers: {'Authorization': Bearer {token}}`  
   * Upload avatar image. Return link to this image.
+* POST: https://dzianiskor-travel-app-server.herokuapp.com/api/ratings/set-rating
+  * Saves the rating that the user has put attractions from the gallery
+  * Need send data: `galleryId, rating`
+  * Need send jwtToken: `headers: {'Authorization': Bearer {token}}`
 
 ## Run project locally
 1. git clone

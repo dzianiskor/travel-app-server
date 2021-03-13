@@ -11,20 +11,6 @@ router.get('/', async (req, res) => {
             .populate('name', `${lang} -_id`)
             .populate('description', `${lang} -_id`)
             .populate('capital', `${lang} -_id`)
-            .populate({
-                path: 'galleries',
-                select: '-_id',
-                populate: [
-                    {
-                        path: 'name',
-                        select: `${lang} -_id`
-                    },
-                    {
-                        path: 'description',
-                        select: `${lang} -_id`
-                    }
-                ]
-            })
             .lean()
 
         res.json(countries.map(country => normalizeCountry(country, lang)))
@@ -69,7 +55,6 @@ router.get('/:id', async (req, res) => {
             .populate('capital', `${lang} -_id`)
             .populate({
                 path: 'galleries',
-                select: '-_id',
                 populate: [
                     {
                         path: 'name',
@@ -78,6 +63,14 @@ router.get('/:id', async (req, res) => {
                     {
                         path: 'description',
                         select: `${lang} -_id`
+                    },
+                    {
+                        path: 'ratings',
+                        select: `user rating -_id`,
+                        populate: {
+                            path: 'user',
+                            select: `email -_id`
+                        }
                     }
                 ]
             })
