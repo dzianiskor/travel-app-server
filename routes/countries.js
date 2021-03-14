@@ -70,7 +70,7 @@ router.get('/:id', async (req, res) => {
                         select: `user rating -_id`,
                         populate: {
                             path: 'user',
-                            select: `email -_id`
+                            select: `email name avatar -_id`
                         }
                     }
                 ]
